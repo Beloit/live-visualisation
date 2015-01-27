@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    	<script src="https://code.jquery.com/jquery-2.1.3.js"></script>
+    	<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/flot/0.8.2/jquery.flot.min.js"></script>
+
+  </head>
+  <body>
+
+  <script>
+
+  $(document).ready(function() {
+
+    var input_data = [];
+    
+    var timer = setInterval(function(){
+                $.ajax({url: '/data', 
+                        dataType: 'json', 
+                        success: function(result){
+                            var new_input_point = [result.timestamp, result.data];
+                            
+                            input_data.push(new_input_point);
+
+                            var plot = $.plot($("#placeholder"), [input_data]);
+                       }});
+            }, 1);
+
+  });
+    
+  </script>
+
+	
+
+	<div id='data'></div>
+	<div style="width: 1000px; height: 300px;" id="placeholder"></div>
+
+  </body>
+</html>
